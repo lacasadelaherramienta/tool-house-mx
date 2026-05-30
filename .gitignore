@@ -1,0 +1,21 @@
+# Configuración local de Claude Code / tooling (no compartir)
+.claude/settings.local.json
+.claude/launch.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs y temporales
+*.log
+node_modules/
+.cache/
+tmp/
