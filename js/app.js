@@ -38,11 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.innerHTML = items
       .map((p) => {
         const icon = CATEGORY_ICON[p.categoria] || "i-wrench";
+        const media = p.imagen
+          ? `<img class="product-card__photo" src="${p.imagen}" alt="${p.nombre}" loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+             <svg class="product-card__icon" style="display:none"><use href="#${icon}"/></svg>`
+          : `<svg class="product-card__icon"><use href="#${icon}"/></svg>`;
         return `
         <article class="product-card" data-id="${p.id}">
           ${p.badge ? `<span class="product-card__badge">${p.badge}</span>` : ""}
           <div class="product-card__media">
-            <svg class="product-card__icon"><use href="#${icon}"/></svg>
+            ${media}
           </div>
           <div class="product-card__body">
             <p class="product-card__cat">${CATEGORY_LABELS[p.categoria]} · ${p.sku}</p>

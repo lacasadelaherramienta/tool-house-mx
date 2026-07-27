@@ -14,9 +14,8 @@
   (`assets/img/productos/cat-02.png … cat-23.png`). Queda como snapshot comparable,
   no se toca mientras se trabaja en `rebuild-v2`.
 - **`rebuild-v2`** (rama actual) → **reconstrucción completa desde cero**: nuevo diseño
-  visual, nuevo código (mismos paths de archivo, reescritos), y **catálogo de ejemplo**
-  (no se reutilizan los 22 productos reales de v1 — se reintroducirán más adelante,
-  ya sea reconfirmando datos con el cliente o portando los reales al nuevo diseño).
+  visual, nuevo código (mismos paths de archivo, reescritos), y **catálogo real** de
+  22 productos portado desde `main`/v1 (mismos datos y fotos, `assets/img/productos/`).
   Aún **sin mergear a `main`** — está pensada para compararse antes de reemplazar v1.
 
 ## 1. Resumen del negocio
@@ -53,7 +52,7 @@ Crear una **landing page / tienda** que permita a los clientes:
 |------|----------|---------|
 | **Tipo de carrito / pagos** | ✅ Pedido por **WhatsApp**: el carrito arma un mensaje con productos, cantidades y total, y abre WhatsApp con ese texto. El cobro se cierra manualmente. | Ideal para mayoreo (precios negociables, cotizaciones), más barato y rápido de lanzar. Se puede migrar a pago en línea después. |
 | **Tecnología** | ✅ **HTML + CSS + JavaScript** puro (sin framework). | Ligero, fácil de subir a cualquier hosting, sin costos ni dependencias. Suficiente para landing + catálogo + carrito. |
-| **Catálogo de productos** | ✅ **Lista fija** en un archivo de datos (`products.js`). En `rebuild-v2` es un **catálogo de ejemplo** hasta reconfirmar/portar datos reales. | Sin base de datos. Fácil de editar a mano. Migrable a panel de administración después. |
+| **Catálogo de productos** | ✅ **Lista fija** en un archivo de datos (`products.js`), poblada con los 22 productos reales del cliente (portados a `rebuild-v2`). | Sin base de datos. Fácil de editar a mano. Migrable a panel de administración después. |
 | **Persistencia del carrito** | `localStorage` del navegador (clave `thmx_cart`). | El carrito sobrevive recargas sin necesidad de backend. |
 | **Hosting sugerido** | Estático (Netlify, Vercel, GitHub Pages o hosting tradicional). | Costo $0 o muy bajo. |
 
@@ -65,11 +64,11 @@ Crear una **landing page / tienda** que permita a los clientes:
 
 ## 5. Recursos del cliente (imágenes y catálogos)
 
-- **Catálogo real ya procesado (disponible en `main`, v1):** 22 productos extraídos del
-  `Catalogo WEB Tool House 2026.pdf` (texto + fotos vía PyMuPDF), guardados en
-  `assets/img/productos/cat-02.png … cat-23.png` con `sku`, `nombre`, `precio`, `categoria`
-  y `desc`. **No se usan en `rebuild-v2`** por decisión de reconstrucción desde cero, pero
-  siguen disponibles ahí para portarlos al nuevo diseño más adelante si se decide.
+- **Catálogo real:** 22 productos extraídos del `Catalogo WEB Tool House 2026.pdf`
+  (texto + fotos vía PyMuPDF), guardados en `assets/img/productos/cat-02.png … cat-23.png`
+  con `sku`, `nombre`, `precio`, `categoria` (industrial 15 / mantenimiento 2 / agrícola 5)
+  y `desc`. Ya está portado a `js/products.js` en `rebuild-v2` con el nuevo diseño
+  "FIERRO VIVO" (mismos datos y fotos que en `main`/v1).
 - **Catálogos PDF de referencia (en el Escritorio):**
   - `Catalogo Burcat Power.pdf`
   - `Catalogo Tool House 2026.pdf` (catálogo propio 2026)
@@ -79,9 +78,6 @@ Crear una **landing page / tienda** que permita a los clientes:
 ### Datos aún pendientes de confirmar
 > ⚠️ Reemplazar los placeholders cuando el cliente los proporcione.
 
-- **Catálogo de `rebuild-v2`:** actualmente son 12 productos de **ejemplo** (marcados con
-  badge "EJEMPLO"), no datos reales. Decidir si se portan los 22 reales de v1 o se
-  recapturan con el nuevo cliente/diseño.
 - **Logotipo:** ✅ recibido (círculo gris oscuro + casa naranja + "The Tool House mx"),
   vive en `assets/img/marca/logo.png` — se conserva igual en `rebuild-v2`.
 - **Horario de atención / dirección física** en Irapuato.
@@ -119,28 +115,29 @@ proyecto landing page/
 ├── css/
 │   └── styles.css       # estilos — dirección "FIERRO VIVO"
 ├── js/
-│   ├── products.js      # catálogo de EJEMPLO (12 productos, ver §5)
+│   ├── products.js      # catálogo REAL (22 productos, portados de v1, ver §5)
 │   ├── cart.js           # módulo Cart + localStorage (clave thmx_cart)
 │   ├── whatsapp.js       # arma el mensaje del pedido y abre WhatsApp
 │   └── app.js             # render de catálogo/carrito, filtros, UI
 └── assets/
     └── img/
-        ├── productos/    # fotos reales de v1 (cat-02…cat-23), SIN USAR en rebuild-v2
+        ├── productos/    # fotos reales (cat-02…cat-23), usadas en el catálogo
         └── marca/         # logo.png (se conserva igual)
 ```
 
 **Notas de implementación:**
 - Cada script se cuelga de un único namespace (`window.THMX`) en vez de globals sueltos.
-- Catálogo de ejemplo: sin fotos reales, usa ícono generado por categoría
-  (llave/engrane/planta) y banner "Catálogo de ejemplo — productos reales pendientes de
-  proporcionar por el cliente." sobre la grilla.
+- Catálogo con fotos reales: `product-card__media` muestra la foto del producto
+  (`object-fit:contain`, ya que las fotos extraídas del PDF tienen relación de aspecto
+  variable); si una imagen falla al cargar, cae automáticamente al ícono por categoría
+  (llave/engrane/planta) como respaldo.
 - El carrito persiste en `localStorage` (clave `thmx_cart`, forma `[{id, qty}]`).
 
 ### Secciones de la página (index.html)
 1. **Header / navbar** con logo y nombre.
 2. **Hero** con propuesta de valor (mayoreo y menudeo, envíos a todo México) y CTA a WhatsApp.
 3. **Categorías** (Mantenimiento industrial / Agrícola / Industrial).
-4. **Catálogo de productos** (ejemplo) con tarjetas: ícono, nombre, precio, botón "Agregar al carrito".
+4. **Catálogo de productos** (real) con tarjetas: foto, nombre, precio, botón "Agregar al carrito".
 5. **Carrito** (panel lateral): lista de items, cantidades, total, botón "Pedir por WhatsApp".
 6. **Sección de contacto / ubicación** (Irapuato).
 7. **Footer** con datos del negocio.
@@ -161,9 +158,6 @@ proyecto landing page/
 - Muestra productos, cantidades, subtotal y total.
 - Permite cambiar cantidades y eliminar items.
 - Botón final genera un mensaje itemizado y abre WhatsApp con ese texto prellenado.
-  Mientras el catálogo sea de ejemplo, el mensaje incluye una nota:
-  *(Catálogo de ejemplo — favor de confirmar disponibilidad y precio real)* — quitar esa
-  nota de `js/whatsapp.js` en cuanto entren datos reales.
 
 ## 8. Estado del proyecto / TODO (rebuild-v2)
 
@@ -176,9 +170,9 @@ proyecto landing page/
 - [x] Reescribir `index.html` con la nueva estructura y fuentes.
 - [x] Reescribir `css/styles.css` con la dirección "FIERRO VIVO" (con skill `frontend-design`).
 - [x] Verificar en navegador (desktop 1280px + móvil 375px): WhatsApp flotante, agregar al
-  carrito, panel de carrito (cantidades, total, mensaje de pedido con nota de catálogo de
-  ejemplo), persistencia en `localStorage` tras recargar, sin errores de consola.
-- [ ] Decidir si se portan los 22 productos reales de v1 al nuevo diseño o se recapturan.
+  carrito, panel de carrito (cantidades, total, mensaje de pedido), persistencia en
+  `localStorage` tras recargar, sin errores de consola.
+- [x] Portar los 22 productos reales de v1 (datos + fotos) al catálogo de `rebuild-v2`.
 - [ ] Reemplazar placeholders restantes (horario, redes sociales, métodos de pago).
 - [ ] Decidir merge de `rebuild-v2` → `main` una vez aprobado por el cliente.
 - [ ] Publicar (hosting + dominio).
@@ -192,4 +186,4 @@ proyecto landing page/
 - Todo el texto de cara al usuario en **español**.
 - Mantener este archivo como única fuente de verdad del contexto.
 
-*(Última actualización: 2026-07-27 — inicio de reconstrucción completa en rama `rebuild-v2`, dirección de diseño "FIERRO VIVO", catálogo de ejemplo.)*
+*(Última actualización: 2026-07-27 — catálogo real de 22 productos portado de v1 al rediseño "FIERRO VIVO" en rama `rebuild-v2`.)*

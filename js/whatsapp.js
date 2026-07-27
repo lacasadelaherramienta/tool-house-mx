@@ -17,8 +17,6 @@ window.THMX = window.THMX || {};
     return "Hola THE TOOL HOUSE MX, me interesa información sobre sus herramientas.";
   }
 
-  // NOTA: la línea "(Catálogo de ejemplo...)" es temporal — quitar en cuanto
-  // el catálogo tenga datos reales de producto (ver js/products.js).
   function buildOrderMessage(items, products) {
     const lines = ["Hola THE TOOL HOUSE MX 👋", "Quiero cotizar/pedir lo siguiente:", ""];
     let total = 0;
@@ -36,7 +34,7 @@ window.THMX = window.THMX || {};
     });
 
     lines.push(`Total estimado: ${formatMoney(total)}`, "");
-    lines.push("(Catálogo de ejemplo — favor de confirmar disponibilidad y precio real)");
+    lines.push("¿Me confirman precio, disponibilidad y costo de envío? Gracias.");
 
     return lines.join("\n");
   }
