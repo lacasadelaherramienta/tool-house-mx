@@ -6,9 +6,11 @@
   <title>THE TOOL HOUSE MX | Herramientas industriales, agrícolas y de mantenimiento</title>
   <meta name="description" content="Venta de herramientas para mantenimiento industrial, uso agrícola e industrial. Mayoreo y menudeo con envíos a toda la República Mexicana. Irapuato, Gto." />
   <meta name="theme-color" content="#16181c" />
+  <link rel="icon" type="image/png" href="assets/img/marca/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/marca/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Saira:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -50,9 +52,14 @@
   <!-- ===== HEADER ===== -->
   <header class="header">
     <div class="container header__inner">
-      <a href="#inicio" class="logo">
-        <span class="logo__mark"><svg class="icon"><use href="#i-wrench"/></svg></span>
-        <span class="logo__text">THE TOOL HOUSE <span class="logo__mx">MX</span></span>
+      <a href="#inicio" class="logo" aria-label="THE TOOL HOUSE MX — Inicio">
+        <img class="logo__img" src="assets/img/marca/logo.png" alt="THE TOOL HOUSE MX"
+             width="56" height="56"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="logo__fallback">
+          <span class="logo__mark"><svg class="icon"><use href="#i-wrench"/></svg></span>
+          <span class="logo__text">THE TOOL HOUSE <span class="logo__mx">MX</span></span>
+        </span>
       </a>
 
       <div class="search">
@@ -108,7 +115,7 @@
   <!-- ===== BAND DE STATS ===== -->
   <section class="stats" aria-label="Cifras del negocio">
     <div class="container stats__inner">
-      <div class="stat"><span class="stat__num">100<span class="stat__plus">+</span></span><span class="stat__label">Herramientas en catálogo</span></div>
+      <div class="stat"><span class="stat__num">22<span class="stat__plus">+</span></span><span class="stat__label">Herramientas en catálogo</span></div>
       <div class="stat"><span class="stat__num">32<span class="stat__plus"> estados</span></span><span class="stat__label">Cobertura nacional</span></div>
       <div class="stat"><span class="stat__num">3</span><span class="stat__label">Líneas: industrial · mantenimiento · agro</span></div>
       <div class="stat"><span class="stat__num">24<span class="stat__plus">h</span></span><span class="stat__label">Respuesta por WhatsApp</span></div>
@@ -149,7 +156,7 @@
       <div>
         <p class="section-kicker">Nuestro catálogo</p>
         <h2 class="section-title">Herramienta lista para trabajar</h2>
-        <p class="section-sub" id="catalogSub">Productos de ejemplo — se reemplazarán por los reales.</p>
+        <p class="section-sub" id="catalogSub">Soldadoras, generadores, rotomartillos, motosierras y más. Mayoreo y menudeo, con envío a todo México.</p>
       </div>
     </div>
     <div class="catalog__grid" id="productGrid"><!-- productos inyectados por JS --></div>
@@ -224,7 +231,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__col">
-        <div class="logo logo--footer"><span class="logo__mark"><svg class="icon"><use href="#i-wrench"/></svg></span><span class="logo__text">THE TOOL HOUSE <span class="logo__mx">MX</span></span></div>
+        <div class="logo logo--footer"><img class="logo__img logo__img--footer" src="assets/img/marca/logo.png" alt="THE TOOL HOUSE MX" width="72" height="72" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="logo__fallback"><span class="logo__mark"><svg class="icon"><use href="#i-wrench"/></svg></span><span class="logo__text">THE TOOL HOUSE <span class="logo__mx">MX</span></span></span></div>
         <p>Venta de herramientas industriales, agrícolas y de mantenimiento. Mayoreo y menudeo en todo México.</p>
       </div>
       <div class="footer__col">

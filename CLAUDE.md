@@ -68,7 +68,9 @@ Crear una **landing page / tienda** que permita a los clientes:
 
 - **Nombres, precios y descripciones** de cada herramienta (las fotos no están etiquetadas).
 - **Categorización** de cada imagen (Mantenimiento industrial / Agrícola / Industrial).
-- **Logotipo / imágenes de marca.**
+- **Logotipo:** ✅ recibido (círculo gris oscuro + casa naranja + "The Tool House mx").
+  Debe guardarse como `assets/img/marca/logo.png`. Ya está cableado en header, footer y favicon
+  (con fallback automático al ícono+texto si el archivo no existe).
 - **Colores de marca:** pendiente. Provisional: paleta industrial (negro, amarillo/naranja "construcción", gris).
 - **Horario de atención / dirección física** en Irapuato.
 - **Redes sociales** (Facebook, Instagram, etc.).
@@ -164,10 +166,27 @@ proyecto landing page/
   en `body` → `overflow-x:clip` (evita un contenedor de scroll paralelo).
 - [x] Pruebas en móvil (375px) y escritorio: catálogo, carrito, mensaje de WhatsApp,
   filtros y búsqueda verificados en navegador.
-- [ ] Clasificar/seleccionar imágenes y copiarlas a `assets/img/productos/`.
-- [ ] Obtener del cliente nombres, precios y categorías reales → editar `products.js`.
-- [ ] Reemplazar placeholders (logo, colores, horario, redes).
+- [x] **Refinamiento estético con skill `frontend-design`**: dirección "ficha técnica de
+  equipo pesado" (engineering spec-sheet). Tipografía nueva: **Saira Condensed** (display) +
+  **Saira** (cuerpo) + **JetBrains Mono** (capa técnica: precios, etiquetas, kickers, specs).
+  Atmósfera con rejilla de plano (blueprint grid) y grano sutil en hero/footer en vez de negro
+  plano; cinta de precaución reforzada como divisor de marca; placa de especificación "TH-MX·01"
+  en el hero; sombras duras offset; entrada escalonada al cargar el hero; kickers con prefijo
+  técnico `//`. Lógica JS (carrito, WhatsApp, filtros, búsqueda, placeholders) intacta — solo se
+  tocaron `index.html` (link de fuentes) y `css/styles.css`. Verificado en navegador (desktop +
+  móvil 375px): hero, catálogo, carrito ($2,920.00 de prueba), WhatsApp; sin errores de consola.
+- [x] **Logo recibido y cableado** (`assets/img/marca/logo.png`) en header, footer y favicon.
+- [x] **Catálogo real cargado:** 22 productos extraídos del `Catalogo WEB Tool House 2026.pdf`
+  (texto + fotos vía PyMuPDF) en `assets/img/productos/cat-02.png … cat-23.png`. Cada producto
+  tiene `sku`, `nombre`, `precio`, `categoria` (industrial 15 / mantenimiento 2 / agrícola 5)
+  y `desc`. El SKU se muestra en la tarjeta y se incluye en el pedido por WhatsApp.
+  La "Soldadora MMA 250" ($2,500) aparece 3 veces con SKU distinto (MMA160001/MMA16002/
+  MMA160003) → se dejaron como 3 tarjetas separadas (fotos cat-02/cat-04/cat-06).
+- [ ] Reemplazar placeholders restantes (colores de marca, horario, redes sociales).
 - [ ] Publicar (hosting + dominio).
+
+> Herramienta instalada para procesar PDFs: **PyMuPDF** (`python3 -m pip install --user PyMuPDF`).
+> Útil para volver a extraer fotos/textos si el cliente actualiza el catálogo.
 
 ## 9. Notas de trabajo
 
@@ -175,4 +194,4 @@ proyecto landing page/
 - Todo el texto de cara al usuario en **español**.
 - Mantener este archivo como única fuente de verdad del contexto.
 ```
-*(Última actualización: 2026-05-30)*
+*(Última actualización: 2026-05-30 — refinamiento estético con skill frontend-design)*

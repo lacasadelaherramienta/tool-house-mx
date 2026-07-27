@@ -16,9 +16,10 @@ function sendCartToWhatsApp(){
 
   let msg = "Hola THE TOOL HOUSE MX, quiero hacer este pedido:\n\n";
   items.forEach(it => {
+    const sku = it.sku ? ` [${it.sku}]` : "";
     const linea = it.precio > 0
-      ? `• ${it.qty}x ${it.nombre} — ${formatMoney(it.precio * it.qty)}`
-      : `• ${it.qty}x ${it.nombre} — (precio a cotizar)`;
+      ? `• ${it.qty}x ${it.nombre}${sku} — ${formatMoney(it.precio * it.qty)}`
+      : `• ${it.qty}x ${it.nombre}${sku} — (precio a cotizar)`;
     msg += linea + "\n";
   });
   msg += `\nTotal estimado: ${formatMoney(Cart.total())}`;

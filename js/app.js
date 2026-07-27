@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" width="300" height="300" data-ph="${p.categoria}">
           </div>
           <div class="product__body">
-            <span class="product__cat">${CATEGORY_LABELS[p.categoria] || ""}</span>
+            <span class="product__cat">${CATEGORY_LABELS[p.categoria] || ""}${p.sku ? ` · ${p.sku}` : ""}</span>
             <h3 class="product__name">${p.nombre}</h3>
             <p class="product__desc">${p.desc}</p>
             <div class="product__price">${price}</div>
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       b.classList.toggle("is-active", b.dataset.filter === filter));
     renderProducts();
     catalogSub.textContent = filter === "all"
-      ? "Productos de ejemplo — se reemplazarán por los reales."
+      ? "Soldadoras, generadores, rotomartillos, motosierras y más. Mayoreo y menudeo, con envío a todo México."
       : "Categoría: " + (CATEGORY_LABELS[filter] || filter);
   }
 
