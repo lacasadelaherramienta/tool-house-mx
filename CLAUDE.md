@@ -78,8 +78,9 @@ Crear una **landing page / tienda** que permita a los clientes:
 ### Datos aún pendientes de confirmar
 > ⚠️ Reemplazar los placeholders cuando el cliente los proporcione.
 
-- **Logotipo:** ✅ recibido (círculo gris oscuro + casa naranja + "The Tool House mx"),
-  vive en `assets/img/marca/logo.png` — se conserva igual en `rebuild-v2`.
+- **Logotipo:** ✅ recibido y ya presente como archivo en `assets/img/marca/logo.png`
+  (círculo negro + casa naranja + "The Tool House mx" en script blanco), 240×240 px
+  (redimensionado del original de 1894×1894 px para no servir un PNG pesado en el header).
 - **Horario de atención / dirección física** en Irapuato.
 - **Redes sociales** (Facebook, Instagram, etc.).
 - **Métodos de pago aceptados** (transferencia, efectivo, etc.).
@@ -186,4 +187,4 @@ proyecto landing page/
 - Todo el texto de cara al usuario en **español**.
 - Mantener este archivo como única fuente de verdad del contexto.
 
-*(Última actualización: 2026-07-27 — catálogo real de 22 productos portado de v1 al rediseño "FIERRO VIVO" en rama `rebuild-v2`.)*
+*(Última actualización: 2026-07-27 — logo real (`assets/img/marca/logo.png`) importado a `rebuild-v2`, catálogo real de 22 productos portado de v1 al rediseño "FIERRO VIVO".)*
