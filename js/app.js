@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkoutBtn = document.getElementById("checkoutBtn");
   const cartClearBtn = document.getElementById("cartClear");
   const filterButtons = document.querySelectorAll("[data-filter]");
+  const searchInput = document.getElementById("searchInput");
+  const searchBtn = document.getElementById("searchBtn");
 
   const CATEGORY_ICON = {
     industrial: "i-factory",
@@ -25,15 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   let activeFilter = "all";
+  let searchTerm = "";
 
   function formatMoney(n) {
     return WhatsApp.formatMoney(n);
   }
 
   function renderCatalog() {
-    const items = PRODUCTS.filter(
-      (p) => activeFilter === "all" || p.categoria === activeFilter
-    );
+    const term = searchTerm.trim().toLowerCase();
+    const items = PRODUCTS.filter((p) => {
+      const matchesFilter = activeFilter === "all" || p.categoria === activeFilter;
+      const matchesSearch =
+        !term ||
+        p.nombre.toLowerCase().includes(term) ||
+        p.desc.toLowerCase().includes(term) ||
+        p.sku.toLowerCase().includes(term);
+      return matchesFilter && matchesSearch;
+    });
 
     grid.innerHTML = items
       .map((p) => {
@@ -149,6 +159,25 @@ document.addEventListener("DOMContentLoaded", () => {
       renderCatalog();
       document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  });
+
+  function runSearch() {
+    searchTerm = searchInput.value;
+    renderCatalog();
+  }
+
+  searchInput.addEventListener("input", runSearch);
+  searchBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    runSearch();
+    document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runSearch();
+      document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
 
   document.addEventListener("cart:change", renderCart);

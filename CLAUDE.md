@@ -13,9 +13,11 @@
   22 productos extraído del `Catalogo WEB Tool House 2026.pdf` con sus fotos
   (`assets/img/productos/cat-02.png … cat-23.png`). Queda como snapshot comparable,
   no se toca mientras se trabaja en `rebuild-v2`.
-- **`rebuild-v2`** (rama actual) → **reconstrucción completa desde cero**: nuevo diseño
-  visual, nuevo código (mismos paths de archivo, reescritos), y **catálogo real** de
-  22 productos portado desde `main`/v1 (mismos datos y fotos, `assets/img/productos/`).
+- **`rebuild-v2`** (rama actual) → **reconstrucción completa desde cero**: nuevo código
+  (mismos paths de archivo, reescritos), **catálogo real** de 22 productos portado desde
+  `main`/v1 (mismos datos y fotos, `assets/img/productos/`), logo real, y dirección visual
+  inspirada en la plantilla **Jantrik** (amarillo/negro, ver §5.1) — reemplazó a un primer
+  intento "FIERRO VIVO" (óxido/carbón) que se descartó dentro de la misma rama.
   Aún **sin mergear a `main`** — está pensada para compararse antes de reemplazar v1.
 
 ## 1. Resumen del negocio
@@ -67,8 +69,8 @@ Crear una **landing page / tienda** que permita a los clientes:
 - **Catálogo real:** 22 productos extraídos del `Catalogo WEB Tool House 2026.pdf`
   (texto + fotos vía PyMuPDF), guardados en `assets/img/productos/cat-02.png … cat-23.png`
   con `sku`, `nombre`, `precio`, `categoria` (industrial 15 / mantenimiento 2 / agrícola 5)
-  y `desc`. Ya está portado a `js/products.js` en `rebuild-v2` con el nuevo diseño
-  "FIERRO VIVO" (mismos datos y fotos que en `main`/v1).
+  y `desc`. Ya está portado a `js/products.js` en `rebuild-v2` (mismos datos y fotos que
+  en `main`/v1), ahora con el rediseño inspirado en la plantilla Jantrik (§5.1).
 - **Catálogos PDF de referencia (en el Escritorio):**
   - `Catalogo Burcat Power.pdf`
   - `Catalogo Tool House 2026.pdf` (catálogo propio 2026)
@@ -86,26 +88,28 @@ Crear una **landing page / tienda** que permita a los clientes:
 - **Métodos de pago aceptados** (transferencia, efectivo, etc.).
 - **Políticas de envío y devoluciones.**
 
-## 5.1. Referencia de diseño — "FIERRO VIVO" (rebuild-v2)
+## 5.1. Referencia de diseño — plantilla "Jantrik" (rebuild-v2, dirección actual)
 
-> Dirección de diseño nueva para `rebuild-v2`, deliberadamente distinta del "neo-industrial
-> spec-sheet" de v1 (negro/amarillo, Saira, blueprint grid). Concepto: taller/ferretería
-> mexicana — cálido y terroso en vez de frío tipo cinta de peligro.
+> El cliente compartió de nuevo la plantilla **Jantrik – Bootstrap4 Template for Tools &
+> Equipment Store** (ThemeForest, item 22094940) como referencia visual. NO se compra ni
+> copia el código; se replica el **look & feel** con HTML/CSS/JS propio (mismo criterio
+> usado en v1). Esta dirección **reemplazó** a la anterior "FIERRO VIVO" (óxido/carbón/beige)
+> dentro de `rebuild-v2` — FIERRO VIVO queda documentada en el historial de git de esta
+> misma rama si se quiere recuperar.
 
-- **Paleta:** óxido/naranja terracota `#C1440E`–`#C65D2E` (acento), carbón cálido `#2B2621`
-  (base), beige tipo concreto/papel `#EDE6DA` (fondo), gris azulado acero `#5C6B73`
-  (etiquetas de categoría).
-- **Tipografía:** display geométrico bold **Space Grotesk** (o Archivo Black), cuerpo
-  **Work Sans** (o Inter), precios/SKU/specs en slab serif **Roboto Slab** (evoca placas
-  metálicas estampadas). Sin repetir Barlow ni Saira (ya usadas en v1).
-- **Motivo visual:** placas estampadas con números, textura de lámina corrugada, remaches
-  en esquinas de tarjetas, borde de papel gastado, franjas chevron en naranja óxido en vez
-  de amarillo precaución.
-- **Sombras:** suaves y "asentadas" con bisel tipo estampado, en vez de las sombras duras
-  offset de v1 — más cálido, menos agresivo, sigue siendo claramente industrial.
-
-*(La referencia "Jantrik" y el estilo neo-industrial/spec-sheet quedan documentados en el
-historial de `main`/v1 si se necesita consultar esa dirección anterior.)*
+- **Paleta:** amarillo construcción `#FFC107` (acento) sobre negro/gris tinta `#16181c`–
+  `#33363c`, fondo claro tipo e-commerce `#f5f6f8` y tarjetas blancas — look de tienda
+  clásica, no de taller artesanal.
+- **Tipografía:** **Oswald** (condensada, mayúsculas, para títulos/botones/precios/nav) +
+  **Work Sans** (cuerpo). Reemplaza a Space Grotesk/Roboto Slab de FIERRO VIVO.
+- **Estructura tipo Jantrik:** top bar (ubicación/correo/envíos/teléfono) → header con
+  logo + **buscador en vivo** + botón de carrito con contador → navbar de categorías
+  (fondo negro, franja activa amarilla) + link "Cotiza a mayoreo" → hero oscuro con CTA
+  amarillo → cajas de categoría (borde superior amarillo) → grid de productos en tarjetas
+  blancas → banner de mayoreo en bloque amarillo sólido → contacto → footer oscuro de
+  columnas con franja chevron amarilla/negra como divisor de marca.
+- **Buscador:** filtra el catálogo en vivo por nombre, descripción y SKU (`js/app.js`),
+  combinado con el filtro de categoría existente.
 
 ## 6. Estructura del sitio (rebuild-v2)
 
@@ -114,7 +118,7 @@ proyecto landing page/
 ├── CLAUDE.md            # este archivo (contexto)
 ├── index.html           # página principal (landing + catálogo + carrito)
 ├── css/
-│   └── styles.css       # estilos — dirección "FIERRO VIVO"
+│   └── styles.css       # estilos — dirección inspirada en plantilla Jantrik (§5.1)
 ├── js/
 │   ├── products.js      # catálogo REAL (22 productos, portados de v1, ver §5)
 │   ├── cart.js           # módulo Cart + localStorage (clave thmx_cart)
@@ -164,16 +168,17 @@ proyecto landing page/
 
 - [x] Comitear v1 en `main` como snapshot y crear rama `rebuild-v2`.
 - [x] Reescribir `CLAUDE.md` con la nueva dirección y estado de ramas.
-- [x] Escribir `js/products.js` (12 productos de ejemplo, 4 por categoría).
 - [x] Escribir `js/cart.js` (módulo Cart + localStorage, namespace `window.THMX`).
 - [x] Escribir `js/whatsapp.js` (builders de mensaje/URL).
-- [x] Escribir `js/app.js` (render + eventos).
-- [x] Reescribir `index.html` con la nueva estructura y fuentes.
-- [x] Reescribir `css/styles.css` con la dirección "FIERRO VIVO" (con skill `frontend-design`).
-- [x] Verificar en navegador (desktop 1280px + móvil 375px): WhatsApp flotante, agregar al
-  carrito, panel de carrito (cantidades, total, mensaje de pedido), persistencia en
-  `localStorage` tras recargar, sin errores de consola.
+- [x] Escribir `js/app.js` (render + eventos + búsqueda en vivo).
+- [x] Reescribir `index.html` con la estructura tipo Jantrik (topbar, buscador, navbar).
 - [x] Portar los 22 productos reales de v1 (datos + fotos) al catálogo de `rebuild-v2`.
+- [x] Importar logo real (`assets/img/marca/logo.png`).
+- [x] Aplicar dirección visual "Jantrik" (amarillo/negro, Oswald + Work Sans) — reemplaza
+  al primer intento "FIERRO VIVO".
+- [x] Verificar en navegador (desktop 1280px + móvil 375px): WhatsApp flotante, buscador en
+  vivo, agregar al carrito, panel de carrito (cantidades, total, mensaje de pedido),
+  persistencia en `localStorage` tras recargar, sin errores de consola.
 - [ ] Reemplazar placeholders restantes (horario, redes sociales, métodos de pago).
 - [ ] Decidir merge de `rebuild-v2` → `main` una vez aprobado por el cliente.
 - [ ] Publicar (hosting + dominio).
@@ -187,4 +192,6 @@ proyecto landing page/
 - Todo el texto de cara al usuario en **español**.
 - Mantener este archivo como única fuente de verdad del contexto.
 
-*(Última actualización: 2026-07-27 — logo real (`assets/img/marca/logo.png`) importado a `rebuild-v2`, catálogo real de 22 productos portado de v1 al rediseño "FIERRO VIVO".)*
+*(Última actualización: 2026-07-27 — dirección visual de `rebuild-v2` cambiada a la
+referencia "Jantrik" (amarillo/negro, topbar + buscador + navbar), reemplazando el primer
+intento "FIERRO VIVO"; logo real y catálogo de 22 productos ya integrados.)*
