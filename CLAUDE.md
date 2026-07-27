@@ -6,6 +6,19 @@
 
 ---
 
+## 0. Estado de ramas (IMPORTANTE)
+
+- **`main`** → **v1**, completa y funcional: diseño "neo-industrial spec-sheet"
+  (Saira Condensed/Saira/JetBrains Mono, negro/amarillo `#FFC107`), catálogo **real** de
+  22 productos extraído del `Catalogo WEB Tool House 2026.pdf` con sus fotos
+  (`assets/img/productos/cat-02.png … cat-23.png`). Queda como snapshot comparable,
+  no se toca mientras se trabaja en `rebuild-v2`.
+- **`rebuild-v2`** (rama actual) → **reconstrucción completa desde cero**: nuevo diseño
+  visual, nuevo código (mismos paths de archivo, reescritos), y **catálogo de ejemplo**
+  (no se reutilizan los 22 productos reales de v1 — se reintroducirán más adelante,
+  ya sea reconfirmando datos con el cliente o portando los reales al nuevo diseño).
+  Aún **sin mergear a `main`** — está pensada para compararse antes de reemplazar v1.
+
 ## 1. Resumen del negocio
 
 - **Nombre comercial:** THE TOOL HOUSE MX
@@ -30,9 +43,9 @@ Crear una **landing page / tienda** que permita a los clientes:
 
 ## 3. Funcionalidades requeridas (del cliente)
 
-- [ ] **Botón de WhatsApp** para que los clientes manden mensaje (pedidos y dudas).
-- [ ] **Botón "Agregar al carrito"** en cada herramienta/producto.
-- [ ] **Carrito de compras** para comprar las herramientas en línea.
+- [x] **Botón de WhatsApp** para que los clientes manden mensaje (pedidos y dudas).
+- [x] **Botón "Agregar al carrito"** en cada herramienta/producto.
+- [x] **Carrito de compras** para comprar las herramientas en línea.
 
 ## 4. Decisiones técnicas (CONFIRMADAS por el cliente)
 
@@ -40,89 +53,97 @@ Crear una **landing page / tienda** que permita a los clientes:
 |------|----------|---------|
 | **Tipo de carrito / pagos** | ✅ Pedido por **WhatsApp**: el carrito arma un mensaje con productos, cantidades y total, y abre WhatsApp con ese texto. El cobro se cierra manualmente. | Ideal para mayoreo (precios negociables, cotizaciones), más barato y rápido de lanzar. Se puede migrar a pago en línea después. |
 | **Tecnología** | ✅ **HTML + CSS + JavaScript** puro (sin framework). | Ligero, fácil de subir a cualquier hosting, sin costos ni dependencias. Suficiente para landing + catálogo + carrito. |
-| **Catálogo de productos** | ✅ **Lista fija** en un archivo de datos (`products.js`), poblada con las imágenes reales del cliente. | Sin base de datos. Fácil de editar a mano. Migrable a panel de administración después. |
-| **Persistencia del carrito** | `localStorage` del navegador. | El carrito sobrevive recargas sin necesidad de backend. |
+| **Catálogo de productos** | ✅ **Lista fija** en un archivo de datos (`products.js`). En `rebuild-v2` es un **catálogo de ejemplo** hasta reconfirmar/portar datos reales. | Sin base de datos. Fácil de editar a mano. Migrable a panel de administración después. |
+| **Persistencia del carrito** | `localStorage` del navegador (clave `thmx_cart`). | El carrito sobrevive recargas sin necesidad de backend. |
 | **Hosting sugerido** | Estático (Netlify, Vercel, GitHub Pages o hosting tradicional). | Costo $0 o muy bajo. |
 
-### Mejoras futuras posibles (no en v1)
+### Mejoras futuras posibles (no en v1/v2)
 - Pago en línea real (Mercado Pago / Stripe).
 - Panel de administración para editar productos sin tocar código.
-- Buscador y filtros por categoría.
 - Cálculo de envíos / integración con paquetería.
 - SEO y dominio propio.
 
 ## 5. Recursos del cliente (imágenes y catálogos)
 
-> Material que ya proporcionó el cliente. **Vive fuera del proyecto** (en el Escritorio);
-> al construir el sitio hay que **copiar** las imágenes seleccionadas a `assets/img/productos/`.
-
-- **Carpeta de fotos de productos:** `/Users/usuario/Desktop/imagenes burcat ` *(¡ojo: el nombre termina con un espacio!)*
-  - **100 imágenes** (`.jpg` / `.JPG`). Nombres no descriptivos (UUID e `IMG_####`), aún sin clasificar por producto.
+- **Catálogo real ya procesado (disponible en `main`, v1):** 22 productos extraídos del
+  `Catalogo WEB Tool House 2026.pdf` (texto + fotos vía PyMuPDF), guardados en
+  `assets/img/productos/cat-02.png … cat-23.png` con `sku`, `nombre`, `precio`, `categoria`
+  y `desc`. **No se usan en `rebuild-v2`** por decisión de reconstrucción desde cero, pero
+  siguen disponibles ahí para portarlos al nuevo diseño más adelante si se decide.
 - **Catálogos PDF de referencia (en el Escritorio):**
   - `Catalogo Burcat Power.pdf`
   - `Catalogo Tool House 2026.pdf` (catálogo propio 2026)
-- Otras carpetas en el Escritorio que pueden tener material: `HERRAMIENTA`, `Herramientas`, `fotos soldadora base`.
+- Otras carpetas en el Escritorio que pueden tener material: `HERRAMIENTA`, `Herramientas`,
+  `fotos soldadora base`, `/Users/usuario/Desktop/imagenes burcat ` (100 fotos sin clasificar).
 
 ### Datos aún pendientes de confirmar
 > ⚠️ Reemplazar los placeholders cuando el cliente los proporcione.
 
-- **Nombres, precios y descripciones** de cada herramienta (las fotos no están etiquetadas).
-- **Categorización** de cada imagen (Mantenimiento industrial / Agrícola / Industrial).
-- **Logotipo:** ✅ recibido (círculo gris oscuro + casa naranja + "The Tool House mx").
-  Debe guardarse como `assets/img/marca/logo.png`. Ya está cableado en header, footer y favicon
-  (con fallback automático al ícono+texto si el archivo no existe).
-- **Colores de marca:** pendiente. Provisional: paleta industrial (negro, amarillo/naranja "construcción", gris).
+- **Catálogo de `rebuild-v2`:** actualmente son 12 productos de **ejemplo** (marcados con
+  badge "EJEMPLO"), no datos reales. Decidir si se portan los 22 reales de v1 o se
+  recapturan con el nuevo cliente/diseño.
+- **Logotipo:** ✅ recibido (círculo gris oscuro + casa naranja + "The Tool House mx"),
+  vive en `assets/img/marca/logo.png` — se conserva igual en `rebuild-v2`.
 - **Horario de atención / dirección física** en Irapuato.
 - **Redes sociales** (Facebook, Instagram, etc.).
 - **Métodos de pago aceptados** (transferencia, efectivo, etc.).
 - **Políticas de envío y devoluciones.**
 
-## 5.1. Referencia de diseño (plantilla "Jantrik")
+## 5.1. Referencia de diseño — "FIERRO VIVO" (rebuild-v2)
 
-> El cliente eligió como referencia visual la plantilla **Jantrik – Bootstrap4 Template
-> for Tools & Equipment Store** (ThemeForest, item 22094940).
-> NO se compra ni copia el código; se replica el **look & feel** con HTML/CSS/JS propio.
-> Estilo aplicado: estética industrial, acento **amarillo construcción** (`#FFC107`) sobre
-> negros (`#1a1d21`) y grises claros. Top bar, header con buscador + carrito con contador,
-> navbar de categorías, hero oscuro, cajas de categoría, grid de tarjetas con "Agregar al
-> carrito", banner de mayoreo, contacto y footer oscuro de columnas.
+> Dirección de diseño nueva para `rebuild-v2`, deliberadamente distinta del "neo-industrial
+> spec-sheet" de v1 (negro/amarillo, Saira, blueprint grid). Concepto: taller/ferretería
+> mexicana — cálido y terroso en vez de frío tipo cinta de peligro.
 
-## 6. Estructura propuesta del sitio (v1)
+- **Paleta:** óxido/naranja terracota `#C1440E`–`#C65D2E` (acento), carbón cálido `#2B2621`
+  (base), beige tipo concreto/papel `#EDE6DA` (fondo), gris azulado acero `#5C6B73`
+  (etiquetas de categoría).
+- **Tipografía:** display geométrico bold **Space Grotesk** (o Archivo Black), cuerpo
+  **Work Sans** (o Inter), precios/SKU/specs en slab serif **Roboto Slab** (evoca placas
+  metálicas estampadas). Sin repetir Barlow ni Saira (ya usadas en v1).
+- **Motivo visual:** placas estampadas con números, textura de lámina corrugada, remaches
+  en esquinas de tarjetas, borde de papel gastado, franjas chevron en naranja óxido en vez
+  de amarillo precaución.
+- **Sombras:** suaves y "asentadas" con bisel tipo estampado, en vez de las sombras duras
+  offset de v1 — más cálido, menos agresivo, sigue siendo claramente industrial.
+
+*(La referencia "Jantrik" y el estilo neo-industrial/spec-sheet quedan documentados en el
+historial de `main`/v1 si se necesita consultar esa dirección anterior.)*
+
+## 6. Estructura del sitio (rebuild-v2)
 
 ```
 proyecto landing page/
 ├── CLAUDE.md            # este archivo (contexto)
-├── index.html           # ✅ página principal (landing + catálogo + carrito)
+├── index.html           # página principal (landing + catálogo + carrito)
 ├── css/
-│   └── styles.css       # ✅ estilos (estética industrial amarillo/negro)
+│   └── styles.css       # estilos — dirección "FIERRO VIVO"
 ├── js/
-│   ├── products.js      # ✅ datos del catálogo (PRODUCTS) — hoy con ejemplos
-│   ├── cart.js          # ✅ lógica del carrito (módulo Cart + localStorage)
-│   ├── whatsapp.js      # ✅ arma el mensaje del pedido y abre WhatsApp
-│   └── app.js           # ✅ render de catálogo/carrito, filtros, búsqueda, UI
+│   ├── products.js      # catálogo de EJEMPLO (12 productos, ver §5)
+│   ├── cart.js           # módulo Cart + localStorage (clave thmx_cart)
+│   ├── whatsapp.js       # arma el mensaje del pedido y abre WhatsApp
+│   └── app.js             # render de catálogo/carrito, filtros, UI
 └── assets/
     └── img/
-        ├── productos/   # fotos de herramientas (pendiente copiar desde el Escritorio)
-        └── marca/       # logo e imágenes de marca (pendiente)
+        ├── productos/    # fotos reales de v1 (cat-02…cat-23), SIN USAR en rebuild-v2
+        └── marca/         # logo.png (se conserva igual)
 ```
 
-**Notas de implementación (v1 ya construida):**
-- Catálogo y carrito funcionan 100% en el navegador, sin backend.
-- Si una imagen de `assets/img/productos/` no existe, la tarjeta muestra un **placeholder**
-  con ícono automáticamente (función `placeholder()` en `app.js`), así que el sitio se ve
-  bien aunque aún no se copien las fotos reales.
-- El carrito persiste en `localStorage` (clave `thmx_cart`).
-- Filtros por categoría (navbar y cajas), búsqueda en vivo, botón flotante de WhatsApp,
-  panel lateral de carrito y toast de confirmación: ya implementados.
+**Notas de implementación:**
+- Cada script se cuelga de un único namespace (`window.THMX`) en vez de globals sueltos.
+- Catálogo de ejemplo: sin fotos reales, usa ícono generado por categoría
+  (llave/engrane/planta) y banner "Catálogo de ejemplo — productos reales pendientes de
+  proporcionar por el cliente." sobre la grilla.
+- El carrito persiste en `localStorage` (clave `thmx_cart`, forma `[{id, qty}]`).
 
 ### Secciones de la página (index.html)
 1. **Header / navbar** con logo y nombre.
 2. **Hero** con propuesta de valor (mayoreo y menudeo, envíos a todo México) y CTA a WhatsApp.
 3. **Categorías** (Mantenimiento industrial / Agrícola / Industrial).
-4. **Catálogo de productos** con tarjetas: imagen, nombre, precio, botón "Agregar al carrito".
-5. **Carrito** (panel lateral o modal): lista de items, cantidades, total, botón "Pedir por WhatsApp".
+4. **Catálogo de productos** (ejemplo) con tarjetas: ícono, nombre, precio, botón "Agregar al carrito".
+5. **Carrito** (panel lateral): lista de items, cantidades, total, botón "Pedir por WhatsApp".
 6. **Sección de contacto / ubicación** (Irapuato).
-7. **Footer** con datos del negocio y redes.
+7. **Footer** con datos del negocio.
 8. **Botón flotante de WhatsApp** siempre visible.
 
 ## 7. Detalle de funcionalidades clave
@@ -130,68 +151,45 @@ proyecto landing page/
 ### Botón de WhatsApp
 - Botón flotante fijo (esquina inferior derecha) + CTAs en hero y contacto.
 - Enlace: `https://wa.me/524623299168?text=<mensaje>` (formato internacional sin signos).
-- Mensaje base sugerido: "Hola THE TOOL HOUSE MX, me interesa información sobre sus herramientas."
+- Mensaje base: "Hola THE TOOL HOUSE MX, me interesa información sobre sus herramientas."
 
 ### Agregar al carrito
-- Cada producto tiene `id`, `nombre`, `precio`, `categoria`, `imagen`.
+- Cada producto tiene `id`, `sku`, `nombre`, `precio`, `categoria`, `desc`, `imagen`, `badge`.
 - Al hacer clic se agrega al carrito (o incrementa cantidad) y se guarda en `localStorage`.
 
 ### Carrito → pedido por WhatsApp
 - Muestra productos, cantidades, subtotal y total.
 - Permite cambiar cantidades y eliminar items.
-- Botón final genera un mensaje tipo:
-  ```
-  Hola THE TOOL HOUSE MX, quiero hacer este pedido:
-  - 2x Taladro industrial — $X
-  - 1x Llave Stilson — $X
-  Total: $X
-  ```
-  y abre WhatsApp con ese texto prellenado.
+- Botón final genera un mensaje itemizado y abre WhatsApp con ese texto prellenado.
+  Mientras el catálogo sea de ejemplo, el mensaje incluye una nota:
+  *(Catálogo de ejemplo — favor de confirmar disponibilidad y precio real)* — quitar esa
+  nota de `js/whatsapp.js` en cuanto entren datos reales.
 
-## 8. Estado del proyecto / TODO
+## 8. Estado del proyecto / TODO (rebuild-v2)
 
-- [x] Definir contexto del proyecto (este `CLAUDE.md`).
-- [x] Confirmar decisiones técnicas (carrito WhatsApp, HTML/CSS/JS, lista fija).
-- [x] Confirmar WhatsApp (+52 462 329 9168) y ubicar carpeta de imágenes.
-- [x] Definir referencia de diseño (plantilla Jantrik — industrial amarillo/negro).
-- [x] Maquetar `index.html` y `styles.css` (estructura y diseño base).
-- [x] Crear catálogo de ejemplo (`products.js`).
-- [x] Implementar lógica del carrito (`cart.js` + `app.js`).
-- [x] Implementar botón/mensaje de WhatsApp (`whatsapp.js`).
-- [x] **Rediseño visual audaz (neo-industrial)**: tipografía Barlow Condensed + Barlow,
-  alto contraste negro/amarillo con bloques de color, sombras duras tipo offset, franja
-  de precaución como sello de marca, micro-interacciones "press". Secciones nuevas: band
-  de stats (números grandes) y "Cómo comprar" en 3 pasos. La lógica JS (carrito, WhatsApp,
-  filtros, búsqueda, placeholders) se conservó intacta. Bug corregido: `overflow-x:hidden`
-  en `body` → `overflow-x:clip` (evita un contenedor de scroll paralelo).
-- [x] Pruebas en móvil (375px) y escritorio: catálogo, carrito, mensaje de WhatsApp,
-  filtros y búsqueda verificados en navegador.
-- [x] **Refinamiento estético con skill `frontend-design`**: dirección "ficha técnica de
-  equipo pesado" (engineering spec-sheet). Tipografía nueva: **Saira Condensed** (display) +
-  **Saira** (cuerpo) + **JetBrains Mono** (capa técnica: precios, etiquetas, kickers, specs).
-  Atmósfera con rejilla de plano (blueprint grid) y grano sutil en hero/footer en vez de negro
-  plano; cinta de precaución reforzada como divisor de marca; placa de especificación "TH-MX·01"
-  en el hero; sombras duras offset; entrada escalonada al cargar el hero; kickers con prefijo
-  técnico `//`. Lógica JS (carrito, WhatsApp, filtros, búsqueda, placeholders) intacta — solo se
-  tocaron `index.html` (link de fuentes) y `css/styles.css`. Verificado en navegador (desktop +
-  móvil 375px): hero, catálogo, carrito ($2,920.00 de prueba), WhatsApp; sin errores de consola.
-- [x] **Logo recibido y cableado** (`assets/img/marca/logo.png`) en header, footer y favicon.
-- [x] **Catálogo real cargado:** 22 productos extraídos del `Catalogo WEB Tool House 2026.pdf`
-  (texto + fotos vía PyMuPDF) en `assets/img/productos/cat-02.png … cat-23.png`. Cada producto
-  tiene `sku`, `nombre`, `precio`, `categoria` (industrial 15 / mantenimiento 2 / agrícola 5)
-  y `desc`. El SKU se muestra en la tarjeta y se incluye en el pedido por WhatsApp.
-  La "Soldadora MMA 250" ($2,500) aparece 3 veces con SKU distinto (MMA160001/MMA16002/
-  MMA160003) → se dejaron como 3 tarjetas separadas (fotos cat-02/cat-04/cat-06).
-- [ ] Reemplazar placeholders restantes (colores de marca, horario, redes sociales).
+- [x] Comitear v1 en `main` como snapshot y crear rama `rebuild-v2`.
+- [x] Reescribir `CLAUDE.md` con la nueva dirección y estado de ramas.
+- [x] Escribir `js/products.js` (12 productos de ejemplo, 4 por categoría).
+- [x] Escribir `js/cart.js` (módulo Cart + localStorage, namespace `window.THMX`).
+- [x] Escribir `js/whatsapp.js` (builders de mensaje/URL).
+- [x] Escribir `js/app.js` (render + eventos).
+- [x] Reescribir `index.html` con la nueva estructura y fuentes.
+- [x] Reescribir `css/styles.css` con la dirección "FIERRO VIVO" (con skill `frontend-design`).
+- [x] Verificar en navegador (desktop 1280px + móvil 375px): WhatsApp flotante, agregar al
+  carrito, panel de carrito (cantidades, total, mensaje de pedido con nota de catálogo de
+  ejemplo), persistencia en `localStorage` tras recargar, sin errores de consola.
+- [ ] Decidir si se portan los 22 productos reales de v1 al nuevo diseño o se recapturan.
+- [ ] Reemplazar placeholders restantes (horario, redes sociales, métodos de pago).
+- [ ] Decidir merge de `rebuild-v2` → `main` una vez aprobado por el cliente.
 - [ ] Publicar (hosting + dominio).
 
 > Herramienta instalada para procesar PDFs: **PyMuPDF** (`python3 -m pip install --user PyMuPDF`).
-> Útil para volver a extraer fotos/textos si el cliente actualiza el catálogo.
+> Útil si se decide volver a extraer fotos/textos del catálogo real.
 
 ## 9. Notas de trabajo
 
 - Diseño **mobile-first** (la mayoría de clientes entrarán desde el celular).
 - Todo el texto de cara al usuario en **español**.
 - Mantener este archivo como única fuente de verdad del contexto.
-```
-*(Última actualización: 2026-05-30 — refinamiento estético con skill frontend-design)*
+
+*(Última actualización: 2026-07-27 — inicio de reconstrucción completa en rama `rebuild-v2`, dirección de diseño "FIERRO VIVO", catálogo de ejemplo.)*
