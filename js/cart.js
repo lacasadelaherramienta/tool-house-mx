@@ -1,50 +1,77 @@
-/* ====== Lógica del carrito (con persistencia en localStorage) ====== */
+/* ====== Carrito — THE TOOL HOUSE MX (rebuild-v2) ====== */
+window.THMX = window.THMX || {};
 
-const Cart = (() => {
-  const KEY = "thmx_cart";
+(function () {
+  const STORAGE_KEY = "thmx_cart";
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function save(items) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    document.dispatchEvent(new CustomEvent("cart:change", { detail: { items } }));
+  }
+
   let items = load();
 
-  function load(){
-    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-    catch { return []; }
-  }
-  function save(){
-    localStorage.setItem(KEY, JSON.stringify(items));
-    document.dispatchEvent(new CustomEvent("cart:change"));
-  }
+  const Cart = {
+    init() {
+      save(items);
+    },
 
-  function findProduct(id){ return PRODUCTS.find(p => p.id === id); }
+    add(id, qty = 1) {
+      const line = items.find((it) => it.id === id);
+      if (line) {
+        line.qty += qty;
+      } else {
+        items.push({ id, qty });
+      }
+      save(items);
+    },
 
-  function add(id){
-    const existing = items.find(i => i.id === id);
-    if (existing) existing.qty += 1;
-    else items.push({ id, qty:1 });
-    save();
-  }
-  function setQty(id, qty){
-    const it = items.find(i => i.id === id);
-    if (!it) return;
-    it.qty = qty;
-    if (it.qty <= 0) remove(id);
-    else save();
-  }
-  function increment(id){ setQty(id, (items.find(i=>i.id===id)?.qty || 0) + 1); }
-  function decrement(id){ setQty(id, (items.find(i=>i.id===id)?.qty || 0) - 1); }
-  function remove(id){ items = items.filter(i => i.id !== id); save(); }
-  function clear(){ items = []; save(); }
+    remove(id) {
+      items = items.filter((it) => it.id !== id);
+      save(items);
+    },
 
-  function count(){ return items.reduce((n, i) => n + i.qty, 0); }
-  function total(){
-    return items.reduce((sum, i) => {
-      const p = findProduct(i.id);
-      return sum + (p ? p.precio * i.qty : 0);
-    }, 0);
-  }
-  /* Devuelve items enriquecidos con datos del producto */
-  function detailed(){
-    return items.map(i => ({ ...findProduct(i.id), qty:i.qty }))
-                .filter(i => i.id);
-  }
+    setQty(id, qty) {
+      if (qty <= 0) {
+        this.remove(id);
+        return;
+      }
+      const line = items.find((it) => it.id === id);
+      if (line) {
+        line.qty = qty;
+        save(items);
+      }
+    },
 
-  return { add, remove, setQty, increment, decrement, clear, count, total, detailed, items:()=>items };
+    clear() {
+      items = [];
+      save(items);
+    },
+
+    getItems() {
+      return items.slice();
+    },
+
+    count() {
+      return items.reduce((sum, it) => sum + it.qty, 0);
+    },
+
+    getTotal(products) {
+      return items.reduce((sum, it) => {
+        const product = products.find((p) => p.id === it.id);
+        return product ? sum + product.precio * it.qty : sum;
+      }, 0);
+    },
+  };
+
+  window.THMX.Cart = Cart;
 })();
