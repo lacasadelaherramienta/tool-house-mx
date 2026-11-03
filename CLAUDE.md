@@ -117,13 +117,15 @@ Crear una **landing page / tienda** que permita a los clientes:
 proyecto landing page/
 ├── CLAUDE.md            # este archivo (contexto)
 ├── index.html           # página principal (landing + catálogo + carrito)
+├── catalogo.html        # catálogo descargable/imprimible en PDF (ver §7)
 ├── css/
 │   └── styles.css       # estilos — dirección inspirada en plantilla Jantrik (§5.1)
 ├── js/
 │   ├── products.js      # catálogo REAL (22 productos, portados de v1, ver §5)
 │   ├── cart.js           # módulo Cart + localStorage (clave thmx_cart)
 │   ├── whatsapp.js       # arma el mensaje del pedido y abre WhatsApp
-│   └── app.js             # render de catálogo/carrito, filtros, UI
+│   ├── app.js             # render de catálogo/carrito, filtros, UI
+│   └── catalogo.js        # render del catálogo imprimible (reusa products.js)
 └── assets/
     └── img/
         ├── productos/    # fotos reales (cat-02…cat-23), usadas en el catálogo
@@ -179,6 +181,10 @@ proyecto landing page/
 - [x] Verificar en navegador (desktop 1280px + móvil 375px): WhatsApp flotante, buscador en
   vivo, agregar al carrito, panel de carrito (cantidades, total, mensaje de pedido),
   persistencia en `localStorage` tras recargar, sin errores de consola.
+- [x] Agregar catálogo descargable/imprimible en PDF (`catalogo.html` + `js/catalogo.js`):
+  lista los 22 productos agrupados por categoría, reusa `window.THMX.PRODUCTS` (sin duplicar
+  datos) y dispara `window.print()` ("Guardar como PDF"); enlazado desde la sección de
+  catálogo de `index.html`. Subido en PR #1 (`rebuild-v2` → `main`).
 - [ ] Reemplazar placeholders restantes (horario, redes sociales, métodos de pago).
 - [ ] Decidir merge de `rebuild-v2` → `main` una vez aprobado por el cliente.
 - [ ] Publicar (hosting + dominio).
@@ -192,6 +198,8 @@ proyecto landing page/
 - Todo el texto de cara al usuario en **español**.
 - Mantener este archivo como única fuente de verdad del contexto.
 
-*(Última actualización: 2026-07-27 — dirección visual de `rebuild-v2` cambiada a la
-referencia "Jantrik" (amarillo/negro, topbar + buscador + navbar), reemplazando el primer
-intento "FIERRO VIVO"; logo real y catálogo de 22 productos ya integrados.)*
+*(Última actualización: 2026-11-03 — agregado el catálogo descargable/imprimible en PDF
+(`catalogo.html` + `js/catalogo.js`) y subido en el PR #1 (`rebuild-v2` → `main`). Antes
+(2026-07-27): dirección visual de `rebuild-v2` cambiada a la referencia "Jantrik"
+(amarillo/negro, topbar + buscador + navbar), reemplazando el primer intento "FIERRO VIVO";
+logo real y catálogo de 22 productos integrados.)*
