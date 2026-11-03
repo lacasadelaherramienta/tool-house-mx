@@ -936,3 +936,183 @@ input{ font:inherit; }
   padding:6px;
 }
 .cart__clear:hover{ color:#d33; }
+
+/* ============================================================
+   LINK AL CATÁLOGO DESCARGABLE (dentro de la sección #catalogo)
+   ============================================================ */
+.catalog-pdf-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.4em;
+  margin-top:10px;
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:.82rem;
+  text-transform:uppercase;
+  color:var(--yellow-dark);
+}
+.catalog-pdf-link:hover{ color:var(--ink); }
+.catalog-pdf-link .icon{ width:16px; height:16px; }
+
+/* ============================================================
+   CATÁLOGO IMPRIMIBLE (catalogo.html)
+   ============================================================ */
+.print-only{ display:none; }
+
+.pcat-bar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:var(--white);
+  border-bottom:1px solid var(--line);
+  box-shadow:var(--shadow-1);
+}
+.pcat-bar__inner{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:14px;
+  padding-block:14px;
+}
+.pcat-bar__title{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1rem;
+  text-transform:uppercase;
+  color:var(--ink);
+  margin-right:auto;
+}
+.pcat-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.pcat-hint{
+  font-size:.78rem;
+  color:var(--gray);
+  padding-bottom:12px;
+}
+
+.pcat-print-head{
+  text-align:center;
+  padding-block:10px 16px;
+  border-bottom:1px solid #000;
+  margin-bottom:18px;
+}
+.pcat-print-head__brand{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1.2rem;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.pcat-print-head p{ font-size:.8rem; color:#333; }
+.pcat-print-head__date{ margin-top:2px; }
+
+.pcat-list{ padding-block:28px 40px; }
+
+.pcat-section{ margin-bottom:30px; }
+.pcat-section__title{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1.15rem;
+  text-transform:uppercase;
+  color:var(--ink);
+  border-bottom:2px solid var(--yellow);
+  padding-bottom:8px;
+  margin-bottom:16px;
+}
+
+.pcat-grid{
+  display:flex;
+  flex-direction:column;
+}
+
+.pcat-item{
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  align-items:center;
+  gap:16px;
+  padding-block:14px;
+  border-bottom:1px solid var(--line);
+  break-inside:avoid;
+}
+.pcat-item__media{
+  width:64px; height:64px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--paper-2);
+  border-radius:var(--radius-sm);
+  overflow:hidden;
+  flex-shrink:0;
+}
+.pcat-item__photo{ width:100%; height:100%; object-fit:contain; padding:6px; }
+.pcat-item__icon{
+  width:28px; height:28px;
+  color:var(--gray-2);
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.4;
+}
+.pcat-item__body{ min-width:0; }
+.pcat-item__meta{
+  font-family:var(--f-display);
+  font-size:.68rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--gray);
+}
+.pcat-item__name{
+  font-family:var(--f-display);
+  font-weight:500;
+  font-size:.98rem;
+  color:var(--ink);
+  line-height:1.3;
+  margin-top:2px;
+}
+.pcat-item__desc{
+  font-size:.82rem;
+  color:var(--gray);
+  line-height:1.4;
+  margin-top:3px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.pcat-item__price{
+  font-family:var(--f-display);
+  font-weight:600;
+  font-size:1rem;
+  color:var(--ink);
+  white-space:nowrap;
+  text-align:right;
+}
+
+.pcat-footnote{
+  font-size:.78rem;
+  color:var(--gray);
+  text-align:center;
+  padding-bottom:36px;
+  line-height:1.5;
+}
+
+@media (min-width:640px){
+  .pcat-item{ grid-template-columns:72px 1fr auto; }
+}
+
+@media print{
+  .no-print{ display:none !important; }
+  .print-only{ display:block !important; }
+
+  @page{ margin:14mm 12mm; }
+
+  body{ background:#fff; }
+  .pcat-item__media{ background:#fff; border:1px solid #ccc; }
+  .pcat-section__title{ border-bottom-color:#000; }
+  .pcat-item{ border-bottom-color:#ccc; }
+  a{ text-decoration:none; }
+}
